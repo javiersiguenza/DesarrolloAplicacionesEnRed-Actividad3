@@ -33,13 +33,13 @@ jobs:
       run: npm ci
 
     - name: Build Angular app
-      run: npm run build:prod
+      run: npm run build
 
     - name: Copy .nojekyll file
-      run: cp .nojekyll ./dist/angular-tutorial/browser/
+      run: cp .nojekyll ./dist/gasolineras-app/browser/ || echo ".nojekyll not found, skipping"
 
     - name: List build output (debug)
-      run: ls -la ./dist/angular-tutorial/browser/
+      run: ls -la ./dist/gasolineras-app/browser/
 
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -47,7 +47,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: './dist/angular-tutorial/browser'
+        path: './dist/gasolineras-app/browser'
 
   deploy:
     environment:
