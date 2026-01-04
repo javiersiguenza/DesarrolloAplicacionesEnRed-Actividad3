@@ -2,7 +2,21 @@
 
 Aplicación web desarrollada en **Angular** que permite buscar y comparar gasolineras en España utilizando la API REST del Ministerio para la Transformación Digital y Función Pública.
 
-## 📋 Descripción
+## � Participantes
+
+- **Raúl Hidalgo Calvo**
+- **Aitor Vivanco**
+- **Javier Sigüenza Moreno**
+
+## 📝 Descripción de la Actividad
+
+Este proyecto forma parte de la **Actividad 3** de la asignatura **Desarrollo de Aplicaciones en Red**, cuyo objetivo principal es aplicar conocimientos sobre el uso de APIs REST para integrar datos obtenidos desde servicios web dentro de una aplicación desarrollada por componentes.
+
+La aplicación consume la API pública del Ministerio para la Transformación Digital y Función Pública de España, que proporciona información actualizada sobre precios de carburantes en gasolineras españolas. A través de una interfaz intuitiva y moderna, los usuarios pueden localizar gasolineras cercanas, comparar precios y aplicar diversos filtros según sus necesidades.
+
+Esta actividad contribuye significativamente al proyecto transversal del grado sobre automatización y gestión de hidrocarburos.
+
+## 📋 Descripción Funcional
 
 Esta aplicación permite a los usuarios:
 
