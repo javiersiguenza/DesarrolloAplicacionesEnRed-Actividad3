@@ -1,0 +1,46 @@
+<div class="app-container">
+  <header class="app-header">
+    <div class="container">
+      <h1>⛽ Buscador de Gasolineras España</h1>
+      <p class="subtitle">Encuentra las gasolineras más cercanas y económicas</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="error-global" *ngIf="error">
+      ⚠️ {{ error }}
+    </div>
+
+    <div class="app-layout">
+      <!-- Sección de Filtros (Entrada de datos) -->
+      <section class="seccion-filtros">
+        <app-filtros (buscar)="buscarGasolineras($event)"></app-filtros>
+      </section>
+
+      <!-- Sección de Resultados (Salida de datos) -->
+      <section class="seccion-resultados">
+        <app-resultados 
+          [gasolineras]="gasolinerasFiltradas"
+          [cargando]="cargando"
+          [tipoCombustible]="tipoCombustibleSeleccionado">
+        </app-resultados>
+      </section>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>
+        Datos proporcionados por el 
+        <a href="https://datos.gob.es/es/catalogo/e05068001-precio-de-carburantes-en-las-gasolineras-espanolas" 
+           target="_blank" 
+           rel="noopener noreferrer">
+          Ministerio para la Transformación Digital y Función Pública
+        </a>
+      </p>
+      <p class="footer-note">
+        Actividad 3 - Desarrollo de Aplicaciones en Red - Universidad
+      </p>
+    </div>
+  </footer>
+</div>

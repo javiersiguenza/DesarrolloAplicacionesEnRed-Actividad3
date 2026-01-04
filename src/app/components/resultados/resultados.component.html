@@ -1,0 +1,205 @@
+<div class="resultados-container card">
+  <h2>📊 Resultados de la Búsqueda</h2>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="cargando">
+    <div class="spinner"></div>
+    <p>Buscando gasolineras...</p>
+  </div>
+
+  <!-- Sin resultados -->
+  <div class="sin-resultados" *ngIf="!cargando && gasolineras.length === 0">
+    <div class="empty-state">
+      <span class="empty-icon">🔍</span>
+      <h3>No se encontraron gasolineras</h3>
+      <p>Intenta ajustar los filtros de búsqueda o aumentar el radio de distancia.</p>
+    </div>
+  </div>
+
+  <!-- Con resultados -->
+  <div *ngIf="!cargando && gasolineras.length > 0">
+    <!-- Estadísticas -->
+    <div class="estadisticas">
+      <div class="stat-card">
+        <span class="stat-icon">📍</span>
+        <div class="stat-info">
+          <span class="stat-label">Total encontradas</span>
+          <span class="stat-value">{{ obtenerEstadisticas().total }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card" *ngIf="obtenerEstadisticas().masCercana">
+        <span class="stat-icon">🎯</span>
+        <div class="stat-info">
+          <span class="stat-label">Más cercana</span>
+          <span class="stat-value">{{ obtenerEstadisticas().masCercana?.distancia?.toFixed(2) }} km</span>
+        </div>
+      </div>
+
+      <div class="stat-card" *ngIf="obtenerEstadisticas().masBarata">
+        <span class="stat-icon">💰</span>
+        <div class="stat-info">
+          <span class="stat-label">Precio más bajo</span>
+          <span class="stat-value">{{ obtenerPrecio(obtenerEstadisticas().masBarata!) }}</span>
+        </div>
+      </div>
+
+      <div class="stat-card" *ngIf="obtenerEstadisticas().precioPromedio > 0">
+        <span class="stat-icon">📊</span>
+        <div class="stat-info">
+          <span class="stat-label">Precio promedio</span>
+          <span class="stat-value">{{ obtenerEstadisticas().precioPromedio.toFixed(3) }} €/L</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destacados -->
+    <div class="destacados" *ngIf="obtenerEstadisticas().masBarata || obtenerEstadisticas().masCercana">
+      <h3>⭐ Destacados</h3>
+      
+      <div class="destacado-item destacado-barata" *ngIf="obtenerEstadisticas().masBarata">
+        <div class="destacado-header">
+          <span class="destacado-badge">💰 MÁS BARATA</span>
+          <h4>{{ obtenerEstadisticas().masBarata!['Rótulo'] }}</h4>
+        </div>
+        <div class="destacado-info">
+          <p><strong>📍 Dirección:</strong> {{ obtenerEstadisticas().masBarata!['Dirección'] }}</p>
+          <p><strong>🏙️ Localidad:</strong> {{ obtenerEstadisticas().masBarata!['Localidad'] }} ({{ obtenerEstadisticas().masBarata!['Provincia'] }})</p>
+          <p><strong>⛽ Precio {{ obtenerNombreCombustible() }}:</strong> 
+            <span class="precio-destacado">{{ obtenerPrecio(obtenerEstadisticas().masBarata!) }}</span>
+          </p>
+          <p *ngIf="obtenerEstadisticas().masBarata?.distancia">
+            <strong>📏 Distancia:</strong> {{ obtenerEstadisticas().masBarata!.distancia!.toFixed(2) }} km
+          </p>
+          <p><strong>🕐 Horario:</strong> {{ obtenerEstadisticas().masBarata!['Horario'] || 'No disponible' }}</p>
+        </div>
+      </div>
+
+      <div class="destacado-item destacado-cercana" *ngIf="obtenerEstadisticas().masCercana">
+        <div class="destacado-header">
+          <span class="destacado-badge">🎯 MÁS CERCANA</span>
+          <h4>{{ obtenerEstadisticas().masCercana!['Rótulo'] }}</h4>
+        </div>
+        <div class="destacado-info">
+          <p><strong>📍 Dirección:</strong> {{ obtenerEstadisticas().masCercana!['Dirección'] }}</p>
+          <p><strong>🏙️ Localidad:</strong> {{ obtenerEstadisticas().masCercana!['Localidad'] }} ({{ obtenerEstadisticas().masCercana!['Provincia'] }})</p>
+          <p><strong>⛽ Precio {{ obtenerNombreCombustible() }}:</strong> 
+            <span class="precio-destacado">{{ obtenerPrecio(obtenerEstadisticas().masCercana!) }}</span>
+          </p>
+          <p><strong>📏 Distancia:</strong> 
+            <span class="distancia-destacada">{{ obtenerEstadisticas().masCercana!.distancia?.toFixed(2) }} km</span>
+          </p>
+          <p><strong>🕐 Horario:</strong> {{ obtenerEstadisticas().masCercana!['Horario'] || 'No disponible' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de todas las gasolineras -->
+    <div class="lista-gasolineras">
+      <div class="lista-header">
+        <h3>📋 Todas las gasolineras ({{ gasolineras.length }})</h3>
+        
+        <!-- Control de resultados por página -->
+        <div class="resultados-por-pagina">
+          <label>Mostrar:</label>
+          <select [(ngModel)]="resultadosPorPagina" (change)="cambiarResultadosPorPagina(resultadosPorPagina)">
+            <option [value]="5">5</option>
+            <option [value]="10">10</option>
+            <option [value]="20">20</option>
+            <option [value]="50">50</option>
+          </select>
+          <span>por página</span>
+        </div>
+      </div>
+
+      <!-- Información de paginación -->
+      <div class="info-paginacion" *ngIf="gasolineras.length > 0">
+        Mostrando {{ (paginaActual - 1) * resultadosPorPagina + 1 }} - 
+        {{ Math.min(paginaActual * resultadosPorPagina, gasolineras.length) }} 
+        de {{ gasolineras.length }} resultados
+      </div>
+      
+      <div class="gasolineras-grid">
+        <div 
+          class="gasolinera-card" 
+          *ngFor="let gasolinera of obtenerGasolinerasPaginadas()"
+          [class.mas-barata]="esMasBarata(gasolinera)"
+          [class.mas-cercana]="esMasCercana(gasolinera)">
+          
+          <div class="gasolinera-header">
+            <h4>{{ gasolinera['Rótulo'] }}</h4>
+            <div class="badges">
+              <span class="badge badge-barata" *ngIf="esMasBarata(gasolinera)">💰 Más barata</span>
+              <span class="badge badge-cercana" *ngIf="esMasCercana(gasolinera)">🎯 Más cercana</span>
+            </div>
+          </div>
+
+          <div class="gasolinera-body">
+            <p class="direccion">📍 {{ gasolinera['Dirección'] }}</p>
+            <p class="localidad">🏙️ {{ gasolinera['Localidad'] }}, {{ gasolinera['Provincia'] }}</p>
+            
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Precio:</span>
+                <span class="info-value precio">{{ obtenerPrecio(gasolinera) }}</span>
+              </div>
+              
+              <div class="info-item" *ngIf="gasolinera.distancia">
+                <span class="info-label">Distancia:</span>
+                <span class="info-value">{{ gasolinera.distancia.toFixed(2) }} km</span>
+              </div>
+            </div>
+
+            <p class="horario" *ngIf="gasolinera['Horario']">
+              🕐 {{ gasolinera['Horario'] }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles de paginación -->
+      <div class="paginacion" *ngIf="obtenerTotalPaginas() > 1">
+        <button 
+          class="btn-pagina btn-anterior" 
+          (click)="paginaAnterior()"
+          [disabled]="paginaActual === 1">
+          ← Anterior
+        </button>
+
+        <button 
+          *ngIf="obtenerPaginasVisibles()[0] > 1"
+          class="btn-pagina"
+          (click)="irAPagina(1)">
+          1
+        </button>
+
+        <span *ngIf="obtenerPaginasVisibles()[0] > 2" class="puntos-suspensivos">...</span>
+
+        <button 
+          *ngFor="let pagina of obtenerPaginasVisibles()"
+          class="btn-pagina"
+          [class.activa]="pagina === paginaActual"
+          (click)="irAPagina(pagina)">
+          {{ pagina }}
+        </button>
+
+        <span *ngIf="obtenerPaginasVisibles()[obtenerPaginasVisibles().length - 1] < obtenerTotalPaginas() - 1" 
+              class="puntos-suspensivos">...</span>
+
+        <button 
+          *ngIf="obtenerPaginasVisibles()[obtenerPaginasVisibles().length - 1] < obtenerTotalPaginas()"
+          class="btn-pagina"
+          (click)="irAPagina(obtenerTotalPaginas())">
+          {{ obtenerTotalPaginas() }}
+        </button>
+
+        <button 
+          class="btn-pagina btn-siguiente" 
+          (click)="paginaSiguiente()"
+          [disabled]="paginaActual === obtenerTotalPaginas()">
+          Siguiente →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

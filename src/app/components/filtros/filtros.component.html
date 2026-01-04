@@ -1,0 +1,146 @@
+<div class="filtros-container card">
+  <h2>🔍 Búsqueda de Gasolineras</h2>
+  
+  <!-- Sección de Ubicación -->
+  <div class="seccion">
+    <h3>📍 Ubicación</h3>
+    <div class="ubicacion-controls">
+      <div class="ubicacion-inputs">
+        <div class="input-group">
+          <label for="latitud">Latitud:</label>
+          <input 
+            type="number" 
+            id="latitud" 
+            [(ngModel)]="latitud" 
+            step="0.0001"
+            placeholder="Ej: 40.4168">
+        </div>
+        
+        <div class="input-group">
+          <label for="longitud">Longitud:</label>
+          <input 
+            type="number" 
+            id="longitud" 
+            [(ngModel)]="longitud" 
+            step="0.0001"
+            placeholder="Ej: -3.7038">
+        </div>
+      </div>
+      
+      <div class="ubicacion-boton">
+        <button 
+          class="btn-location" 
+          (click)="obtenerUbicacionActual()"
+          [disabled]="cargandoUbicacion">
+          <span *ngIf="!cargandoUbicacion">📍 Usar mi ubicación</span>
+          <span *ngIf="cargandoUbicacion">⏳ Obteniendo...</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="success" *ngIf="mensajeExito">{{ mensajeExito }}</div>
+    <div class="error" *ngIf="errorUbicacion">{{ errorUbicacion }}</div>
+  </div>
+
+  <!-- Sección de Radio de búsqueda -->
+  <div class="seccion">
+    <h3>📏 Radio de búsqueda</h3>
+    <div class="input-group">
+      <label for="radio">Distancia máxima (km):</label>
+      <input 
+        type="number" 
+        id="radio" 
+        [(ngModel)]="radioKm" 
+        min="1" 
+        max="100"
+        placeholder="Ej: 10">
+      <span class="range-value">{{ radioKm }} km</span>
+    </div>
+  </div>
+
+  <!-- Sección de Tipo de Combustible -->
+  <div class="seccion">
+    <h3>⛽ Tipo de combustible</h3>
+    <div class="radio-group">
+      <div class="radio-item" *ngFor="let tipo of tiposCombustible">
+        <input 
+          type="radio" 
+          [id]="tipo.valor" 
+          [value]="tipo.valor" 
+          [(ngModel)]="tipoCombustible"
+          name="combustible">
+        <label [for]="tipo.valor">{{ tipo.texto }}</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Filtro por Marcas -->
+  <div class="seccion">
+    <h3>🏢 Filtro por marcas</h3>
+    
+    <div class="radio-group">
+      <div class="radio-item">
+        <input 
+          type="radio" 
+          id="sinFiltro" 
+          value="none" 
+          [(ngModel)]="tipoFiltroMarcas"
+          name="tipoFiltro">
+        <label for="sinFiltro">Sin filtro</label>
+      </div>
+      <div class="radio-item">
+        <input 
+          type="radio" 
+          id="listaBlanca" 
+          value="whitelist" 
+          [(ngModel)]="tipoFiltroMarcas"
+          name="tipoFiltro">
+        <label for="listaBlanca">Solo estas marcas (Lista blanca)</label>
+      </div>
+      <div class="radio-item">
+        <input 
+          type="radio" 
+          id="listaNegra" 
+          value="blacklist" 
+          [(ngModel)]="tipoFiltroMarcas"
+          name="tipoFiltro">
+        <label for="listaNegra">Excluir estas marcas (Lista negra)</label>
+      </div>
+    </div>
+
+    <div class="marcas-container" *ngIf="tipoFiltroMarcas !== 'none'">
+      <div class="marcas-grid">
+        <div class="checkbox-item" *ngFor="let marca of marcasDisponibles">
+          <input 
+            type="checkbox" 
+            [id]="'marca-' + marca" 
+            [checked]="estaMarcaSeleccionada(marca)"
+            (change)="toggleMarca(marca, $event)">
+          <label [for]="'marca-' + marca">{{ marca }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de Opciones Adicionales -->
+  <div class="seccion">
+    <h3>⚙️ Opciones adicionales</h3>
+    <div class="checkbox-item">
+      <input 
+        type="checkbox" 
+        id="soloAbiertas" 
+        [(ngModel)]="soloAbiertas">
+      <label for="soloAbiertas">Mostrar solo gasolineras abiertas</label>
+    </div>
+  </div>
+
+  <!-- Botones de Acción -->
+  <div class="acciones">
+    <button class="btn btn-primary" (click)="realizarBusqueda()">
+      🔍 Buscar gasolineras
+    </button>
+    <button class="btn btn-secondary" (click)="resetearFiltros()">
+      🔄 Resetear filtros
+    </button>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://sedeaplicaciones.minetur.gob.es",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/ServiciosRESTCarburantes/PreciosCarburantes"
+    }
+  }
+}

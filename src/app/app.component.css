@@ -1,0 +1,112 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+  font-size: 42px;
+  margin: 0 0 12px 0;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  font-size: 18px;
+  opacity: 0.95;
+  margin: 0;
+  font-weight: 300;
+}
+
+main {
+  flex: 1;
+  padding: 40px 20px;
+}
+
+.error-global {
+  background: #ffebee;
+  color: #c62828;
+  padding: 16px 24px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  text-align: center;
+  font-weight: 600;
+  border-left: 4px solid #c62828;
+}
+
+.app-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.seccion-filtros,
+.seccion-resultados {
+  width: 100%;
+}
+
+.app-footer {
+  background: #2c3e50;
+  color: white;
+  padding: 32px 20px;
+  text-align: center;
+  margin-top: 60px;
+}
+
+.app-footer p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.app-footer a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.app-footer a:hover {
+  color: #5dade2;
+  text-decoration: underline;
+}
+
+.footer-note {
+  opacity: 0.7;
+  font-size: 12px;
+  margin-top: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 28px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+  }
+  
+  main {
+    padding: 20px 10px;
+  }
+  
+  .app-layout {
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .app-layout {
+    grid-template-columns: 400px 1fr;
+  }
+}
