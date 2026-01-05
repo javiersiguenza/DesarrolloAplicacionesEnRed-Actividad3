@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FiltrosComponent } from './components/filtros/filtros.component';
 import { ResultadosComponent } from './components/resultados/resultados.component';
@@ -12,14 +12,19 @@ import { Gasolinera, FiltrosBusqueda } from './models/gasolinera.model';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   gasolineras: Gasolinera[] = [];
   gasolinerasFiltradas: Gasolinera[] = [];
   cargando: boolean = false;
   error: string = '';
   tipoCombustibleSeleccionado: string = 'Precio Gasolina 95 E5';
+  busquedaRealizada: boolean = false;
 
   constructor(private gasolineraService: GasolineraService) {}
+
+  ngOnInit() {
+    // No es necesario hacer nada aquí, la búsqueda inicial se realiza desde filtros.component
+  }
 
   /**
    * Maneja la búsqueda con los filtros aplicados
@@ -28,6 +33,7 @@ export class AppComponent {
     this.cargando = true;
     this.error = '';
     this.tipoCombustibleSeleccionado = filtros.tipoCombustible;
+    this.busquedaRealizada = true;
 
     try {
       // Obtener todas las gasolineras de la API

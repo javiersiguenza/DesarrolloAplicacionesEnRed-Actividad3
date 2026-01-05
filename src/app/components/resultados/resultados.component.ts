@@ -14,6 +14,7 @@ export class ResultadosComponent {
   @Input() gasolineras: Gasolinera[] = [];
   @Input() cargando: boolean = false;
   @Input() tipoCombustible: string = 'Precio Gasolina 95 E5';
+  @Input() busquedaRealizada: boolean = false;
 
   // Exponer Math para usar en el template
   Math = Math;

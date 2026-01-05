@@ -8,7 +8,7 @@
   </div>
 
   <!-- Sin resultados -->
-  <div class="sin-resultados" *ngIf="!cargando && gasolineras.length === 0">
+  <div class="sin-resultados" *ngIf="!cargando && busquedaRealizada && gasolineras.length === 0">
     <div class="empty-state">
       <span class="empty-icon">🔍</span>
       <h3>No se encontraron gasolineras</h3>

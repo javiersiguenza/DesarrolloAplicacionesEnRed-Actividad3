@@ -44,15 +44,26 @@ main {
 
 .app-layout {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 500px 1fr;
   gap: 32px;
   max-width: 1800px;
+  width: 100%;
   margin: 0 auto;
 }
 
-.seccion-filtros,
+.seccion-filtros {
+  width: 500px;
+  min-width: 500px;
+  max-width: 500px;
+}
+
 .seccion-resultados {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  flex-shrink: 1;
 }
 
 .app-footer {
@@ -101,12 +112,23 @@ main {
   }
   
   .app-layout {
+    grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  .seccion-filtros {
+    min-width: 0;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1199px) {
   .app-layout {
-    grid-template-columns: 400px 1fr;
+    grid-template-columns: 420px 1fr;
+  }
+
+  .seccion-filtros {
+    width: 420px;
+    min-width: 420px;
+    max-width: 420px;
   }
 }

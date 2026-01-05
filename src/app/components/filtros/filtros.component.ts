@@ -70,9 +70,14 @@ export class FiltrosComponent implements OnInit {
       setTimeout(() => {
         this.mensajeExito = '';
       }, 3000);
+
+      // Realizar búsqueda automática después de obtener la ubicación
+      this.realizarBusqueda();
     } catch (error) {
       // Si el usuario rechaza o hay error, simplemente usamos las coordenadas por defecto
       console.log('No se pudo obtener la ubicación automáticamente, usando coordenadas por defecto');
+      // Aún así realiza la búsqueda con coordenadas por defecto
+      this.realizarBusqueda();
     } finally {
       this.cargandoUbicacion = false;
     }

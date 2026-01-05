@@ -3,8 +3,11 @@
   padding: 24px;
   min-height: 500px;
   width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .resultados-container h2 {
@@ -31,10 +34,12 @@ h3 {
   text-align: center;
   padding: 60px 20px;
   min-height: 400px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .loading p {
@@ -47,9 +52,11 @@ h3 {
 .sin-resultados {
   padding: 40px 20px;
   min-height: 400px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .empty-state {
@@ -57,6 +64,11 @@ h3 {
   padding: 40px;
   background: #f8f9fa;
   border-radius: 12px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .empty-icon {
@@ -68,33 +80,42 @@ h3 {
 .empty-state h3 {
   color: #7f8c8d;
   margin: 12px 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .empty-state p {
   color: #95a5a6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 /* Estadísticas */
 .estadisticas {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 32px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .stat-card {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  padding: 12px 16px;
   border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  text-align: center;
 }
 
 .stat-icon {
-  font-size: 36px;
+  font-size: 24px;
 }
 
 .stat-info {
@@ -104,14 +125,14 @@ h3 {
 }
 
 .stat-label {
-  font-size: 12px;
+  font-size: 10px;
   opacity: 0.9;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .stat-value {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
 }
 
