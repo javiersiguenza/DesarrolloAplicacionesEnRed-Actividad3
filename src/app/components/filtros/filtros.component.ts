@@ -62,8 +62,9 @@ export class FiltrosComponent implements OnInit {
     try {
       this.cargandoUbicacion = true;
       const coordenadas = await this.gasolineraService.obtenerUbicacionActual();
-      this.latitud = coordenadas.latitud;
-      this.longitud = coordenadas.longitud;
+      // Redondear a 6 decimales para evitar variaciones mínimas
+      this.latitud = Math.round(coordenadas.latitud * 1000000) / 1000000;
+      this.longitud = Math.round(coordenadas.longitud * 1000000) / 1000000;
       this.mensajeExito = '✓ Ubicación obtenida correctamente';
       
       setTimeout(() => {
@@ -87,8 +88,9 @@ export class FiltrosComponent implements OnInit {
 
     try {
       const coordenadas = await this.gasolineraService.obtenerUbicacionActual();
-      this.latitud = coordenadas.latitud;
-      this.longitud = coordenadas.longitud;
+      // Redondear a 6 decimales para evitar variaciones mínimas
+      this.latitud = Math.round(coordenadas.latitud * 1000000) / 1000000;
+      this.longitud = Math.round(coordenadas.longitud * 1000000) / 1000000;
       this.mensajeExito = '✓ Ubicación obtenida correctamente';
       
       setTimeout(() => {

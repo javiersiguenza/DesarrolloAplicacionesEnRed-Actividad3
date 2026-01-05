@@ -1,6 +1,14 @@
 .resultados-container {
   background: white;
   padding: 24px;
+  min-height: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.resultados-container h2 {
+  flex-shrink: 0;
 }
 
 h2 {
@@ -22,6 +30,11 @@ h3 {
 .loading {
   text-align: center;
   padding: 60px 20px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .loading p {
@@ -33,6 +46,10 @@ h3 {
 /* Sin resultados */
 .sin-resultados {
   padding: 40px 20px;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .empty-state {
